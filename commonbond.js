@@ -5,8 +5,10 @@
  * @param Int force of bomb
  * @return Array of strings
  */
+
 function explode(bombs, force) {
 	var frame = bombs.split(''), // store current frame
+		source = [],
 		animation = [bombs],
 		next = [];
 
@@ -48,9 +50,43 @@ function explode(bombs, force) {
 	return animation;
 }
 
-var bombs = '...B....B.....'
+// ---------------------------------------------
 
-console.log(explode(bombs, 1));
+function getIndices (arr, val) {
+	var indices = [],
+		i;
 
+	for (i = 0; i < arr.length; i++) {
+		if (arr[i] === val) {
+			indices.push(i);
+		}
+	}
 
+	return indices;
+}
+
+var thebombs = '...B....B.....';
+
+function detonate (bombs) {
+	// init (?)
+	var frame = bombs.split(''),
+		locations = getIndices(frame, 'B');
+
+	function tick () {
+			for (b in locations) {
+			var bomb = locations[b];
+
+			frame[bomb] = '.';
+
+			frame[bomb - 1] = '<';
+			frame[bomb + 1] = '>';
+		}
+
+		return frame.join('');
+	}
+
+	return tick();
+}
+
+console.log(detonate(thebombs));
 
