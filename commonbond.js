@@ -3,6 +3,7 @@
 // introduce speed setting
 // figure out why an object format would be good for this
 
+// --- a little helper
 function getIndices (arr, val) {
 	var indices = [],
 		i;
@@ -16,7 +17,7 @@ function getIndices (arr, val) {
 	return indices;
 }
 
-var thebombs = '...B....BB.B.';
+var thebombs = 'BB.BBB.....BBBB';
 
 function detonate (bombs) {
 
@@ -27,7 +28,6 @@ function detonate (bombs) {
 		rightForce,
 		leftForce;
 
-	// step 1
 	for (b in locations) {
 		// I could use a better sorting algorithm to alternate between l and right
 		// in a frame FULL of bombs we could explode them at the same time (?)
@@ -35,16 +35,22 @@ function detonate (bombs) {
 
 		frame[bomb] = '.';
 
-		if (frame[bomb - 1] === '>') {
-			frame[bomb - 1] = 'x';
-		} else {
-			frame[bomb - 1] = '<';
+		// left
+		if (bomb - 1 >= 0) {
+			if (frame[bomb - 1] !== '.') {
+				frame[bomb - 1] = 'x';
+			} else {
+				frame[bomb - 1] = '<';
+			}
 		}
 
-		if (frame[bomb + 1] === '<') {
-			frame[bomb + 1] = 'x';
-		} else {
-			frame[bomb + 1] = '>';
+		// right
+		if (bomb + 1 < frame.length) {
+			if (frame[bomb + 1] !== '.') {
+				frame[bomb + 1] = 'x';
+			} else {
+				frame[bomb + 1] = '>';
+			}
 		}
 	}
 
@@ -67,26 +73,26 @@ function detonate (bombs) {
 			frame[crossfire[x]] = '.';
 		}
 
-		for (l in leftForce) {
-			frame[leftForce[l]] = '.';
-
-			if (leftForce[l] - 1 <= frame.length) {
-				if (frame[leftForce[l] - 1] === '>') {
-					frame[leftForce[l] - 1] = 'x';
-				} else {
-					frame[leftForce[l] - 1] = '<';
-				}
-			}
-		}
-
 		for (r in rightForce) {
 			frame[rightForce[r]] = '.';
 
 			if (rightForce[r] + 1 < frame.length) {
-				if (frame[rightForce[r] + 1] === '<') {
+				if (frame[rightForce[r] + 1] !== '.') {
 					frame[rightForce[r] + 1] = 'x';
 				} else {
 					frame[rightForce[r] + 1] = '>';
+				}
+			}
+		}
+
+		for (l in leftForce) {
+			frame[leftForce[l]] = '.';
+
+			if (leftForce[l] - 1 >= 0) {
+				if (frame[leftForce[l] - 1] !== '.') {
+					frame[leftForce[l] - 1] = 'x';
+				} else {
+					frame[leftForce[l] - 1] = '<';
 				}
 			}
 		}
