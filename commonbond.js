@@ -65,28 +65,56 @@ function getIndices (arr, val) {
 	return indices;
 }
 
-var thebombs = '...B....B.....';
+var thebombs = '........B.B...';
 
 function detonate (bombs) {
-	// init (?)
+
+	console.log(bombs);
+
 	var frame = bombs.split(''),
-		locations = getIndices(frame, 'B');
+		locations = getIndices(frame, 'B'),
+		rightForce,
+		leftForce;
 
-	function tick () {
-			for (b in locations) {
-			var bomb = locations[b];
+	// step 1
+	for (b in locations) {
+		var bomb = locations[b];
 
-			frame[bomb] = '.';
+		frame[bomb] = '.';
 
-			frame[bomb - 1] = '<';
-			frame[bomb + 1] = '>';
-		}
-
-		return frame.join('');
+		frame[bomb - 1] = '<';
+		frame[bomb + 1] = '>';
 	}
 
-	return tick();
+	console.log(frame.join(''));
+
+	// again
+	rightForce = getIndices(frame, '>'),
+	leftForce = getIndices(frame, '<');
+
+	for (f in rightForce) {
+		var arrow = rightForce[f];
+
+		frame[arrow] = '.';
+		frame[arrow + 1] = '>';
+	}
+
+	console.log(frame.join(''));
+
+	// again
+	rightForce = getIndices(frame, '>'),
+	leftForce = getIndices(frame, '<');
+
+	for (f in leftForce) {
+		var arrow = leftForce[f];
+
+		frame[arrow] = '.';
+		frame[arrow - 1] = '<';
+	}
+
+	console.log(frame.join(''));
 }
 
-console.log(detonate(thebombs));
+detonate(thebombs);
+
 
