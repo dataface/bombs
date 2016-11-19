@@ -99,27 +99,25 @@ function detonate (bombs) {
 			return;
 		}
 
-		for (f in rightForce) {
-			var arrow = rightForce[f];
+		for (r in rightForce) {
+			frame[rightForce[r]] = '.';
 
-			frame[arrow] = '.';
-
-			if (!arrow + 1 > frame.length) {
-				frame[arrow + 1] = '>';
+			if (!rightForce[r] + 1 > frame.length) {
+				frame[rightForce[r] + 1] = '>';
 			}
 		}
 
-		for (f in leftForce) {
-			var arrow = leftForce[f];
+		for (l in leftForce) {
+			frame[leftForce[l]] = '.';
 
-			frame[arrow] = '.';
-
-			if (!arrow - 1 < frame.length) {
-				frame[arrow - 1] = '<';
+			if (!leftForce[l] - 1 < frame.length) {
+				frame[leftForce[l] - 1] = '<';
 			}
 		}
 
 		console.log(frame.join(''));
+
+		tick(frame);
 	}
 }
 
