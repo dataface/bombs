@@ -35,8 +35,17 @@ function detonate (bombs) {
 
 		frame[bomb] = '.';
 
-		frame[bomb - 1] = '<';
-		frame[bomb + 1] = '>';
+		if (frame[bomb - 1] === '>') {
+			frame[bomb - 1] = 'x';
+		} else {
+			frame[bomb - 1] = '<';
+		}
+
+		if (frame[bomb + 1] === '<') {
+			frame[bomb + 1] = 'x';
+		} else {
+			frame[bomb + 1] = '>';
+		}
 	}
 
 	console.log(frame.join(''));
@@ -45,7 +54,7 @@ function detonate (bombs) {
 
 	function tick (frame) {
 		// consolidate these two into 1 array and then if-statement them later (?)
-		rightForce = getIndices(frame, '>'),
+		rightForce = getIndices(frame, '>'), // these should start as 'B' and THEN become an arrow
 		leftForce = getIndices(frame, '<'),
 		crossfire = getIndices(frame, 'x');
 
