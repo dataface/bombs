@@ -65,7 +65,7 @@ function getIndices (arr, val) {
 	return indices;
 }
 
-var thebombs = '........B.B...';
+var thebombs = '.B......B.B...';
 
 function detonate (bombs) {
 
@@ -88,31 +88,39 @@ function detonate (bombs) {
 
 	console.log(frame.join(''));
 
-	// again
-	rightForce = getIndices(frame, '>'),
-	leftForce = getIndices(frame, '<');
+	tick(frame);
 
-	for (f in rightForce) {
-		var arrow = rightForce[f];
+	function tick (frame) {
+		// consolidate these two into 1 array and then if-statement them later
+		rightForce = getIndices(frame, '>'),
+		leftForce = getIndices(frame, '<');
 
-		frame[arrow] = '.';
-		frame[arrow + 1] = '>';
+		if (!rightForce.length && !leftForce.length) {
+			return;
+		}
+
+		for (f in rightForce) {
+			var arrow = rightForce[f];
+
+			frame[arrow] = '.';
+
+			if (!arrow + 1 > frame.length) {
+				frame[arrow + 1] = '>';
+			}
+		}
+
+		for (f in leftForce) {
+			var arrow = leftForce[f];
+
+			frame[arrow] = '.';
+
+			if (!arrow - 1 < frame.length) {
+				frame[arrow - 1] = '<';
+			}
+		}
+
+		console.log(frame.join(''));
 	}
-
-	console.log(frame.join(''));
-
-	// again
-	rightForce = getIndices(frame, '>'),
-	leftForce = getIndices(frame, '<');
-
-	for (f in leftForce) {
-		var arrow = leftForce[f];
-
-		frame[arrow] = '.';
-		frame[arrow - 1] = '<';
-	}
-
-	console.log(frame.join(''));
 }
 
 detonate(thebombs);
