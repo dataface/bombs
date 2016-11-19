@@ -46,19 +46,19 @@ function detonate (bombs) {
 			return;
 		}
 
-		for (r in rightForce) {
-			frame[rightForce[r]] = '.';
-
-			if (!rightForce[r] + 1 > frame.length) {
-				frame[rightForce[r] + 1] = '>';
-			}
-		}
-
 		for (l in leftForce) {
 			frame[leftForce[l]] = '.';
 
-			if (!leftForce[l] - 1 < frame.length) {
+			if (leftForce[l] - 1 <= frame.length) {
 				frame[leftForce[l] - 1] = '<';
+			}
+		}
+
+		for (r in rightForce) {
+			frame[rightForce[r]] = '.';
+
+			if (rightForce[r] + 1 < frame.length) {
+				frame[rightForce[r] + 1] = '>';
 			}
 		}
 
