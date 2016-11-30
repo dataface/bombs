@@ -33,15 +33,7 @@ function detonate (bombs) {
 
 		frame[bomb] = '.';
 
-		// left
-		if (bomb - 1 >= 0) {
-			if (frame[bomb - 1] !== '.') {
-				frame[bomb - 1] = 'x';
-			} else {
-				frame[bomb - 1] = '<';
-			}
-		}
-
+		tickLeft(bomb, frame);
 		tickRight(bomb, frame);
 	}
 
@@ -94,7 +86,7 @@ function detonate (bombs) {
 
 	function tickLeft (index, arr) {
 		if (index - 1 >= 0) {
-			if (arr[index - 1] !== '.') {
+			if (arr[index - 1] === '>') {
 				arr[index - 1] = 'x';
 			} else {
 				arr[index - 1] = '<';
