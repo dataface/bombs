@@ -17,7 +17,7 @@ function getIndices (arr, val) {
 	return indices;
 }
 
-var thebombs = '.BB......B....B.';
+var thebombs = '......B...B......';
 
 function detonate (bombs) {
 
@@ -45,32 +45,30 @@ function detonate (bombs) {
 		// consolidate these two into 1 array and then if-statement them later (?)
 		rightForce = getIndices(frame, '>'), // these should start as 'B' and THEN become an arrow
 		leftForce = getIndices(frame, '<'),
+		forces = rightForce.concat(leftForce), // maybe a bad idea
 		crossfire = getIndices(frame, 'x');
-
-		// stop if there's nothing left
-		if (!rightForce.length && !leftForce.length && !crossfire.length) {
-			return;
-		}
 
 		for (x in crossfire) {
 			frame[crossfire[x]] = '.';
 		}
 
-		for (r in rightForce) {
-			frame[rightForce[r]] = '.';
+		for (f in forces) {
 
-			tickRight(rightForce[r], frame);
-		}
+			if (frame[forces[f]] === '>') {
+				tickRight(forces[f], frame);
 
-		for (l in leftForce) {
-			frame[leftForce[l]] = '.';
+			} else if (frame[forces[f]] === '<') {
+				tickLeft(forces[f], frame);
+			}
 
-			tickLeft(leftForce[l], frame);
+			frame[forces[f]] = '.';
 		}
 
 		console.log(frame.join(''));
 
-		tick(frame);
+		if (forces.length || crossfire.length) {
+			tick(frame);
+		}
 	}
 
 	function tickRight (index, arr) {
