@@ -17,11 +17,9 @@ function getIndices (arr, val) {
 	return indices;
 }
 
-var thebombs = 'BB.BBB.....BBBB';
+var thebombs = '.BB......B....B.';
 
 function detonate (bombs) {
-
-	console.log(bombs);
 
 	var frame = bombs.split(''),
 		locations = getIndices(frame, 'B'),
@@ -44,14 +42,7 @@ function detonate (bombs) {
 			}
 		}
 
-		// right
-		if (bomb + 1 < frame.length) {
-			if (frame[bomb + 1] !== '.') {
-				frame[bomb + 1] = 'x';
-			} else {
-				frame[bomb + 1] = '>';
-			}
-		}
+		tickRight(bomb, frame);
 	}
 
 	console.log(frame.join(''));
@@ -76,32 +67,43 @@ function detonate (bombs) {
 		for (r in rightForce) {
 			frame[rightForce[r]] = '.';
 
-			if (rightForce[r] + 1 < frame.length) {
-				if (frame[rightForce[r] + 1] !== '.') {
-					frame[rightForce[r] + 1] = 'x';
-				} else {
-					frame[rightForce[r] + 1] = '>';
-				}
-			}
+			tickRight(rightForce[r], frame);
 		}
 
 		for (l in leftForce) {
 			frame[leftForce[l]] = '.';
 
-			if (leftForce[l] - 1 >= 0) {
-				if (frame[leftForce[l] - 1] !== '.') {
-					frame[leftForce[l] - 1] = 'x';
-				} else {
-					frame[leftForce[l] - 1] = '<';
-				}
-			}
+			tickLeft(leftForce[l], frame);
 		}
 
 		console.log(frame.join(''));
 
 		tick(frame);
 	}
+
+	function tickRight (index, arr) {
+
+		if (index + 1 < arr.length) {
+			if (arr[index + 1] === '<') {
+				arr[index + 1] = 'x';
+			} else {
+				arr[index + 1] = '>';
+			}
+		}
+	}
+
+	function tickLeft (index, arr) {
+		if (index - 1 >= 0) {
+			if (arr[index - 1] !== '.') {
+				arr[index - 1] = 'x';
+			} else {
+				arr[index - 1] = '<';
+			}
+		}
+	}
 }
+
+console.log(thebombs);
 
 detonate(thebombs);
 
