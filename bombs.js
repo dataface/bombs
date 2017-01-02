@@ -10,7 +10,7 @@ var c = {
 	nothing: '_',
 	lforce: '<',
 	rforce: '>',
-	cfire: '*'
+	cfire: 'x'
 }
 
 // --- a little helper
@@ -103,6 +103,9 @@ function detonate (config) {
 		}
 	}
 }
+
+// class Bombscape ()
+// class Bomb ()
 
 // demonstrate what bombs we're starting with (stupid)
 console.log(c.bombscape);
